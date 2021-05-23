@@ -30,7 +30,7 @@ public class TimeAspectAop {
 		return response;
 	}
 	
-	@Around(value = "timeAnnotationPointCut() && execution(* com.example.aop.service.ServiceTest.*(..))")
+	@Around(value = "timeAnnotationPointCut() && execution(String com.example.aop.service.ServiceTest.*(..))")
 	public Object timeService(ProceedingJoinPoint pjp) throws Throwable {
 		Object result = null;
 		long t1 = System.currentTimeMillis();
@@ -39,7 +39,7 @@ public class TimeAspectAop {
 		return result;
 	}
 	
-	@Around(value = "timeAnnotationPointCut() && execution(void com.example.aop.service.ServiceTest.*(..))")
+	@Around(value = "timeAnnotationPointCut() && execution(void com.example.aop.service.ServiceTest.*(..)) && !execution(void com.example.aop.service.ServiceTest.voidReturn3(..)) && !execution(void com.example.aop.service.ServiceTest.voidReturn2(..))")
 	public void timeVoidService(ProceedingJoinPoint pjp) throws Throwable {
 		MethodSignature signature = (MethodSignature) pjp.getSignature();
 	    Method method = signature.getMethod();
@@ -48,5 +48,16 @@ public class TimeAspectAop {
 		long t1 = System.currentTimeMillis();
 		pjp.proceed();
 		System.out.println("service void total time : " + (System.currentTimeMillis() - t1));
+	}
+	
+	@Around(value = "timeAnnotationPointCut() && (execution(void com.example.aop.service.ServiceTest.voidReturn3(..)) || execution(void com.example.aop.service.ServiceTest.voidReturn2(..)))")
+	public void timeVoidService2(ProceedingJoinPoint pjp) throws Throwable {
+		MethodSignature signature = (MethodSignature) pjp.getSignature();
+	    Method method = signature.getMethod();
+	    TimeAnnotation timeAnno = method.getAnnotation(TimeAnnotation.class);
+		System.out.println("msg : " + timeAnno.message());
+		long t1 = System.currentTimeMillis();
+		pjp.proceed();
+		System.out.println("55 service void total time : " + (System.currentTimeMillis() - t1));
 	}
 }

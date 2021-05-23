@@ -23,8 +23,10 @@ public class RestController2 {
 	
 	@PostMapping("/test2")
 	@TimeAnnotation(message = "ake")
-	public @ResponseBody ResponseModel test2(HttpServletRequest request, @RequestBody Request2Model input, HttpServletResponse response) {
+	public @ResponseBody ResponseModel test2(HttpServletRequest request, @RequestBody Request2Model input, HttpServletResponse response) throws InterruptedException {
 		serviceTest.voidReturn();
+		serviceTest.voidReturn2();
+		serviceTest.voidReturn3();
 		return ResponseModel.builder().msg(serviceTest.returnString("test2 v2")).build();
 	}
 }
