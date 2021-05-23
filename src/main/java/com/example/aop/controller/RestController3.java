@@ -35,4 +35,11 @@ public class RestController3 {
 		System.out.println(serviceTestReturn.returnList());
 		return ResponseModel.builder().msg(serviceTestReturn.returnString("testReturn v3")).build();
 	}
+	
+	@PostMapping("/testReturnNotFirstMethod")
+	@ReturnValueAnnotation(message = "ake")
+	public @ResponseBody ResponseModel test3(HttpServletRequest request, @RequestBody Request2Model input, HttpServletResponse response) throws InterruptedException {
+		System.out.println(serviceTestReturn.returnMapTestNotFirstMethod());
+		return ResponseModel.builder().msg(serviceTestReturn.returnString("testReturn v3")).build();
+	}
 }

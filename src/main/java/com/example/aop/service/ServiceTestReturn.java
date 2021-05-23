@@ -1,7 +1,9 @@
 package com.example.aop.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
@@ -82,6 +84,21 @@ public class ServiceTestReturn {
 		List<BeanObject> list = new ArrayList<BeanObject>();
 		list.add(BeanObject.builder().msg("Return List").build());
 		return list;
+	}
+	
+	
+	// *****  NOT WORK *****//
+	public Map<String, BeanObject> returnMapTestNotFirstMethod() throws InterruptedException {
+		return returnMap();
+	}
+	
+	@ReturnValueAnnotation(message = "ake")
+	public Map<String, BeanObject> returnMap() throws InterruptedException {
+		TimeUnit.SECONDS.sleep(2);
+		System.out.println("return map service working");
+		Map<String , BeanObject> map = new HashMap<String, BeanObject>();
+		map.put("result", BeanObject.builder().msg("Return List").build());
+		return map;
 	}
 
 }

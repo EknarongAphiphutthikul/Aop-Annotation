@@ -26,7 +26,7 @@ public class ReturnAspectAop {
 		return response;
 	}
 	
-	@Around(value = "returnValueAnnotationPointCut() && execution(* com.example.aop.service.*.returnDouble*(..))")
+	@Around(value = "returnValueAnnotationPointCut() && execution(* com.example.aop.service.ServiceTestReturn.*(..))")
 	public Object timeService(ProceedingJoinPoint pjp) throws Throwable {
 		Object result = null;
 		long t1 = System.currentTimeMillis();
